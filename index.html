@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sina Denzel</title>
+<meta name="description" content="Sina Denzel, computational linguistics, Heidelberg.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=JetBrains+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap">
+<style>
+/* Layout: a single calm screen. Name, photo, intro, email. Pink is the only accent. */
+:root {
+  --bg: #fbf7f9;
+  --ink: #221b24;
+  --ink-soft: #5e5463;
+  --pink: #c2185b;
+  --pink-soft: #f6d3e3;
+  --line: rgba(34, 27, 36, 0.12);
+
+  --f-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Newsreader", "Georgia", "Cambria", serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "Consolas", monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #17131a;
+    --ink: #f2ecf1;
+    --ink-soft: #b6abb9;
+    --pink: #ff7ab3;
+    --pink-soft: #4b2337;
+    --line: rgba(242, 236, 241, 0.13);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #17131a;
+  --ink: #f2ecf1;
+  --ink-soft: #b6abb9;
+  --pink: #ff7ab3;
+  --pink-soft: #4b2337;
+  --line: rgba(242, 236, 241, 0.13);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  padding-inline: clamp(16px, 4vw, 48px);
+  padding-block: 0;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; }
+a { color: inherit; text-decoration-color: var(--pink); text-underline-offset: 3px; }
+a:hover { color: var(--pink); }
+:focus-visible { outline: 2px solid var(--pink); outline-offset: 3px; border-radius: 3px; }
+
+.page { min-height: 100%; max-width: 980px; margin-inline: auto; display: flex; flex-direction: column; }
+
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 22px; }
+.mark { font-family: var(--f-display); font-weight: 700; font-size: 1.15rem; text-decoration: none; letter-spacing: -0.01em; }
+.mark b { color: var(--pink); }
+.lang { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; }
+.lang button {
+  font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.06em; color: var(--ink-soft);
+  background: transparent; border: 0; border-radius: 999px; padding: 5px 11px; cursor: pointer;
+}
+.lang button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+
+main {
+  flex: 1;
+  display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+  gap: clamp(28px, 6vw, 80px); align-items: center;
+  padding-block: clamp(24px, 6vw, 72px);
+}
+.role { font-family: var(--f-mono); font-size: 0.8rem; letter-spacing: 0.06em; color: var(--pink); margin: 0 0 14px; }
+h1 {
+  font-family: var(--f-display); font-weight: 700; font-size: clamp(3rem, 9vw, 6.2rem);
+  line-height: 0.95; letter-spacing: -0.035em; margin: 0 0 24px;
+}
+.lead { max-width: 50ch; margin: 0 0 30px; font-size: 1.2rem; }
+.now { display: grid; gap: 8px; margin: 0 0 26px; max-width: 52ch; }
+.now div { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 12px; align-items: baseline; }
+.now dt { font-family: var(--f-mono); font-size: 0.75rem; letter-spacing: 0.05em; color: var(--ink-soft); }
+.now dd { margin: 0; }
+.status {
+  display: inline-flex; align-items: center; gap: 10px; max-width: 100%;
+  font-family: var(--f-mono); font-size: 0.8rem; color: var(--ink);
+  background: var(--pink-soft); padding: 8px 14px; border-radius: 16px; margin: 0 0 22px;
+}
+.status span { min-width: 0; }
+.status i { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--pink); animation: pulse 2.2s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(194, 24, 91, 0.45); } 50% { box-shadow: 0 0 0 6px rgba(194, 24, 91, 0); } }
+@media (prefers-reduced-motion: reduce) { .status i { animation: none; } }
+@media (max-width: 420px) { .now div { grid-template-columns: minmax(0, 1fr); gap: 0; } }
+.mail { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.mail a { font-family: var(--f-display); font-weight: 500; font-size: clamp(1.15rem, 2.6vw, 1.5rem); }
+.copy {
+  font-family: var(--f-mono); font-size: 0.75rem; color: var(--ink-soft); background: transparent;
+  border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; cursor: pointer;
+}
+.copy:hover { color: var(--pink); border-color: var(--pink); }
+
+.photo { position: relative; justify-self: center; width: 100%; max-width: 300px; margin: 0; }
+.photo::before {
+  content: ""; position: absolute; inset: 0; transform: translate(12px, 12px);
+  background: var(--pink-soft); border-radius: 10px;
+}
+.photo img { position: relative; display: block; width: 100%; height: auto; border-radius: 10px; }
+
+footer { padding-block: 24px 32px; border-top: 1px solid var(--line); font-family: var(--f-mono); font-size: 0.75rem; color: var(--ink-soft); }
+
+@media (max-width: 760px) {
+  main { grid-template-columns: minmax(0, 1fr); align-items: start; }
+  .photo { max-width: 220px; justify-self: start; order: -1; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="top">
+    <a class="mark" href="#">Sina Denzel<b>.</b></a>
+    <div class="lang" role="group" data-i18n-aria="langAria" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang="de" aria-pressed="false">DE</button>
+    </div>
+  </header>
+
+  <main>
+    <div>
+      <p class="role" data-i18n="role">Computational linguistics · Heidelberg</p>
+      <h1>Sina Denzel</h1>
+      <p class="lead" data-i18n="lead">I study computational linguistics in Heidelberg and work as a student assistant at the Leibniz Institute for the German Language.</p>
+      <dl class="now">
+        <div><dt data-i18n="nowThesisT">Thesis</dt><dd data-i18n="nowThesis">Authority Bias in LLM-Judges (in progress)</dd></div>
+        <div><dt>Toastmasters</dt><dd data-i18n="nowTm">Vice President Membership, Heidelberg</dd></div>
+      </dl>
+      <p class="status"><i aria-hidden="true"></i><span data-i18n="status">Open to working-student roles from November 2026</span></p>
+      <div class="mail">
+        <a id="mail-link" href="#">sinadenzel [at] gmail.com</a>
+        <button type="button" class="copy" id="copy-mail" data-i18n="copy">Copy address</button>
+      </div>
+    </div>
+    <figure class="photo">
+      <img src="sina.jpg" width="960" height="1280" data-i18n-alt="photoAlt" alt="Portrait of Sina Denzel">
+    </figure>
+  </main>
+
+  <footer>© 2026 Sina Denzel</footer>
+</div>
+
+<script>
+(function () {
+  // Email is assembled here so simple scrapers do not find it in the HTML.
+  var addr = ["sinadenzel", "gmail.com"].join("@");
+  var link = document.getElementById("mail-link");
+  link.textContent = addr;
+  link.href = "mailto:" + addr;
+
+  var DE = {
+    langAria: "Sprache",
+    role: "Computerlinguistik · Heidelberg",
+    lead: "Ich studiere Computerlinguistik in Heidelberg und arbeite als studentische Hilfskraft am Leibniz-Institut für Deutsche Sprache.",
+    nowThesisT: "Bachelorarbeit",
+    nowThesis: "Authority Bias in LLM-Judges (in Arbeit)",
+    nowTm: "Vice President Membership, Heidelberg",
+    status: "Offen für Werkstudentenstellen ab November 2026",
+    copy: "Adresse kopieren", copied: "Kopiert",
+    photoAlt: "Porträt von Sina Denzel"
+  };
+  var EN = { copied: "Copied" };
+  var textEls = document.querySelectorAll("[data-i18n]");
+  var ariaEls = document.querySelectorAll("[data-i18n-aria]");
+  var altEls = document.querySelectorAll("[data-i18n-alt]");
+  textEls.forEach(function (el) { EN[el.dataset.i18n] = el.innerHTML; });
+  ariaEls.forEach(function (el) { EN[el.dataset.i18nAria] = el.getAttribute("aria-label"); });
+  altEls.forEach(function (el) { EN[el.dataset.i18nAlt] = el.getAttribute("alt"); });
+  var dict = { en: EN, de: DE };
+  var current = "en";
+
+  function setLang(lang, remember) {
+    var t = dict[lang] || EN;
+    current = lang;
+    document.documentElement.lang = lang;
+    textEls.forEach(function (el) { var v = t[el.dataset.i18n]; if (v != null) el.innerHTML = v; });
+    ariaEls.forEach(function (el) { var v = t[el.dataset.i18nAria]; if (v != null) el.setAttribute("aria-label", v); });
+    altEls.forEach(function (el) { var v = t[el.dataset.i18nAlt]; if (v != null) el.setAttribute("alt", v); });
+    document.querySelectorAll(".lang button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.lang === lang)); });
+    if (remember) { try { localStorage.setItem("sd-lang", lang); } catch (e) {} }
+  }
+  document.querySelectorAll(".lang button").forEach(function (b) {
+    b.addEventListener("click", function () { setLang(b.dataset.lang, true); });
+  });
+
+  document.getElementById("copy-mail").addEventListener("click", function () {
+    var btn = this;
+    function done() { btn.textContent = dict[current].copied; setTimeout(function () { btn.textContent = dict[current].copy; }, 1800); }
+    function select() { var r = document.createRange(); r.selectNodeContents(link); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(addr).then(done, select);
+    else select();
+  });
+
+  var start = "en", stored = null, hash = (location.hash || "").slice(1);
+  try { stored = localStorage.getItem("sd-lang"); } catch (e) {}
+  if (hash === "de" || hash === "en") start = hash;
+  else if (stored === "de" || stored === "en") start = stored;
+  setLang(start, false);
+})();
+</script>
+</body>
+</html>
