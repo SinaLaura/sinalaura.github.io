@@ -129,6 +129,12 @@ h1 {
 .tags li { font-family: var(--f-mono); font-size: 0.72rem; color: var(--ink-soft); border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; }
 .links { display: flex; flex-wrap: wrap; gap: 8px 20px; font-family: var(--f-display); font-weight: 500; }
 @media (max-width: 480px) { .card { grid-template-columns: minmax(0, 1fr); } .card img { width: 72px; height: 72px; border-radius: 16px; } }
+.brand { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: clamp(16px, 3vw, 28px); align-items: center; max-width: 720px; margin: 0 0 clamp(32px, 5vw, 48px); }
+.brand img { width: 120px; height: 120px; border-radius: 20px; display: block; }
+.brand p { margin: 0; }
+.event:last-child { margin-bottom: 0; }
+.card + .card { margin-top: clamp(32px, 5vw, 48px); }
+@media (max-width: 480px) { .brand { grid-template-columns: minmax(0, 1fr); } .brand img { width: 96px; height: 96px; border-radius: 16px; } }
 
 footer { padding-block: 24px 32px; border-top: 1px solid var(--line); font-family: var(--f-mono); font-size: 0.75rem; color: var(--ink-soft); }
 
@@ -184,12 +190,20 @@ footer { padding-block: 24px 32px; border-top: 1px solid var(--line); font-famil
         <a href="https://sinalaura.github.io/gogirls/" data-i18n="linkEvent">Event website ↗</a>
       </div>
     </article>
+  </section>
+
+  <section class="project" aria-labelledby="apps-title">
+    <p class="role" id="apps-title">Ankabuti Applications</p>
+    <div class="brand">
+      <img src="https://sinalaura.github.io/gogirls/images/ankabuti-logo.jpg" width="360" height="360" data-i18n-alt="ankAlt" alt="Ankabuti Applications logo: a cute black spider hanging from a thread">
+      <p data-i18n="ankText">Recently I started using Claude Code to see whether I could make apps myself, and found out how easy it is. Soon I had lots of ideas for apps that are cute and useful at the same time, and I wanted to build them with Claude under my own brand: Ankabuti Applications. <i>Ankabut</i> is Arabic for spider, so a little spider on its thread is the logo, and it climbs into every app icon.</p>
+    </div>
 
     <div class="card">
       <img src="https://sinalaura.github.io/go-timer/icon-192.png" width="192" height="192" alt="">
       <div>
         <h2>Go Girls* Timer</h2>
-        <p data-i18n="projText">The Go Girls* led to my next project: a Go clock in the same cute, girly style. I wanted one to practise for a tournament, so I built it with Claude Code as my pair programmer, from idea to a first working version in one day. It sits on a phone next to the board, has Fischer and byo-yomi time, statistics with a chart of the time per move and a voice in English and German, and works offline. It runs in any browser and is now in testing as an Android app on Google Play.</p>
+        <p data-i18n="gtText">For the Go Girls* I wanted a Go clock in a style that fits the event: as cute and girly as the game nights themselves. I also needed one to practise for a tournament. So I built it with Claude Code as my pair programmer, from idea to a first working version in one day. It lies on a phone next to the board, has Fischer and byo-yomi time, statistics with a chart of the time per move, a voice in English and German and several colour themes to switch between, and works offline. It runs in any browser and is now in testing as an Android app on Google Play.</p>
         <ul class="tags">
           <li>HTML · CSS · JavaScript</li>
           <li data-i18n="tagPwa">Offline web app</li>
@@ -199,6 +213,25 @@ footer { padding-block: 24px 32px; border-top: 1px solid var(--line); font-famil
         <div class="links">
           <a href="https://sinalaura.github.io/go-timer/" data-i18n="linkApp">Try the app ↗</a>
           <a href="https://github.com/SinaLaura/go-timer" data-i18n="linkCode">Code on GitHub ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://sinalaura.github.io/countdown/icon-192.png" width="192" height="192" alt="">
+      <div>
+        <h2>Timebits</h2>
+        <p data-i18n="tbText1">Most timers show a number. I wanted to see at a glance how much time is left, and I wanted watching time pass to be a little bit of fun. So in Timebits every minute is a small thing on the screen, like a hedgehog's spike, a duckling or a grain of sand, and it leaves when its minute is over. The items always fill their space, so the picture gets visibly emptier as time passes. You can set minutes, count down to a time or use the Pomodoro technique, in more than 20 looks and 12 colour palettes. I didn't want any settings, only tapping: tap an item and it reacts, tap the background and the whole look changes.</p>
+        <p data-i18n="tbText2">For Timebits I tried a new way of working: a rules file in the repository as a living specification, and a shared task list that several Claude Code sessions work through in parallel. The first version went online on 14 October 2026, and three days later the project had more than 200 commits.</p>
+        <ul class="tags">
+          <li>HTML · Canvas · JavaScript</li>
+          <li data-i18n="tagPwa">Offline web app</li>
+          <li data-i18n="tagAgents">Parallel AI agents</li>
+          <li>Claude Code</li>
+        </ul>
+        <div class="links">
+          <a href="https://sinalaura.github.io/countdown/" data-i18n="linkApp">Try the app ↗</a>
+          <a href="https://github.com/SinaLaura/countdown" data-i18n="linkCode">Code on GitHub ↗</a>
         </div>
       </div>
     </div>
@@ -228,9 +261,14 @@ footer { padding-block: 24px 32px; border-top: 1px solid var(--line); font-famil
     eventText1: "Im September 2026 habe ich die Go Girls* Game Night ins Leben gerufen, einen monatlichen Go-Abend für Frauen* in Heidelberg, den ich gemeinsam mit Maya veranstalte. Die Idee: einen niedrigschwelligen Einstieg ins Spiel bieten und mehr Frauen* fürs Go begeistern.",
     eventText2: "Die Website zum Event habe ich mit Claude Code gebaut und betreue sie: zweisprachig (Deutsch/Englisch), fürs Handy optimiert, mit automatisch berechneten Terminen, Links zu Meetup und Google Kalender und einer kurzen Einführung in Go.",
     tagEvent: "Community", tagSite: "Website", linkEvent: "Zur Event-Website ↗",
-    projText: "Aus den Go Girls* ist mein nächstes Projekt entstanden: eine Go-Uhr im gleichen niedlichen, mädchenhaften Stil. Ich wollte damit für ein Turnier üben und habe sie mit Claude Code als Programmierpartner gebaut, an einem Tag von der Idee bis zur ersten funktionierenden Version. Auf dem Handy neben dem Brett kann sie Fischer- und Byo-yomi-Bedenkzeit, zeigt eine Statistik mit einem Diagramm der Zeit pro Zug, spricht Englisch und Deutsch und funktioniert offline. Sie läuft in jedem Browser und ist jetzt als Android-App bei Google Play im Test.",
+    gtText: "Für die Go Girls* wollte ich eine Go-Uhr, deren Stil zum Event passt: so niedlich und mädchenhaft wie die Spieleabende selbst. Außerdem brauchte ich eine, um für ein Turnier zu üben. Also habe ich sie mit Claude Code als Programmierpartner gebaut, an einem Tag von der Idee bis zur ersten funktionierenden Version. Auf dem Handy neben dem Brett kann sie Fischer- und Byo-yomi-Bedenkzeit, zeigt eine Statistik mit einem Diagramm der Zeit pro Zug, spricht Englisch und Deutsch, hat mehrere Farbthemen zum Wechseln und funktioniert offline. Sie läuft in jedem Browser und ist jetzt als Android-App bei Google Play im Test.",
     tagPwa: "Offline-Web-App",
     linkApp: "App ausprobieren ↗", linkCode: "Code auf GitHub ↗",
+    ankAlt: "Logo von Ankabuti Applications: eine niedliche schwarze Spinne, die an einem Faden hängt",
+    ankText: "Vor Kurzem habe ich angefangen, mit Claude Code auszuprobieren, ob ich selbst Apps bauen kann, und dabei gemerkt, wie einfach das geht. Schnell hatte ich viele Ideen für Apps, die niedlich und nützlich zugleich sind, und wollte sie mit Claude unter meiner eigenen Marke bauen: Ankabuti Applications. <i>Ankabut</i> ist Arabisch für Spinne, deshalb ist eine kleine Spinne an ihrem Faden das Logo, und sie klettert in jedes App-Icon.",
+    tbText1: "Die meisten Timer zeigen eine Zahl. Ich wollte auf einen Blick sehen, wie viel Zeit noch bleibt, und es sollte ein bisschen Spaß machen, der Zeit beim Vergehen zuzusehen. Deshalb ist in Timebits jede Minute ein kleines Ding auf dem Bildschirm, etwa ein Igelstachel, ein Entenküken oder ein Sandkorn, und verschwindet, wenn ihre Minute vorbei ist. Die Dinge füllen immer ihren Platz aus, so wird das Bild sichtbar leerer, während die Zeit vergeht. Man kann Minuten einstellen, bis zu einer Uhrzeit herunterzählen oder die Pomodoro-Technik nutzen, in mehr als 20 Looks und 12 Farbpaletten. Einstellungen wollte ich keine, nur Tippen: Tippt man auf ein Ding, reagiert es, tippt man auf den Hintergrund, wechselt der ganze Look.",
+    tbText2: "Bei Timebits habe ich eine neue Arbeitsweise ausprobiert: eine Regeldatei im Repository als lebende Spezifikation und eine gemeinsame Aufgabenliste, die mehrere Claude-Code-Sitzungen parallel abarbeiten. Die erste Version ging am 14. Oktober 2026 online, drei Tage später hatte das Projekt schon mehr als 200 Commits.",
+    tagAgents: "Parallele KI-Agenten",
     copy: "Adresse kopieren", copied: "Kopiert",
     photoAlt: "Porträt von Sina Denzel"
   };
