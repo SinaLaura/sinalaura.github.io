@@ -132,22 +132,67 @@ h1 {
 }
 .photo img { position: relative; display: block; width: 100%; height: auto; border-radius: 10px; }
 
-.project { border-top: 1px solid var(--line); padding-block: clamp(28px, 5vw, 48px); }
-.project .role { margin-bottom: 18px; }
-.event { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: clamp(16px, 3vw, 28px); align-items: start; max-width: 720px; margin: 0 0 clamp(36px, 6vw, 56px); }
-.event img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 14px; margin-top: 4px; }
-@media (max-width: 480px) { .event { grid-template-columns: minmax(0, 1fr); } .event img { max-width: 220px; } }
-.event h2 { font-family: var(--f-display); font-weight: 700; font-size: 1.6rem; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 8px; }
-.event p { margin: 0 0 14px; }
-.card { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: clamp(16px, 3vw, 28px); align-items: start; max-width: 720px; }
-.card img { width: 88px; height: 88px; border-radius: 20px; display: block; }
-.card h2 { font-family: var(--f-display); font-weight: 700; font-size: 1.6rem; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 8px; }
-.card p { margin: 0 0 14px; }
-.card code { font-family: var(--f-mono); font-size: 0.85em; color: var(--pink); }
+/* Sections below the intro: an accordion. Every row, open or closed, sits on the same
+   two columns (picture | text), so pictures, titles, text and tags line up all the way down. */
+:root { --media: 128px; --gap: clamp(16px, 3vw, 32px); }
+.sections { border-top: 1px solid var(--line); }
+.sec { border-bottom: 1px solid var(--line); }
+.sec > summary {
+  list-style: none; cursor: pointer;
+  display: grid; grid-template-columns: var(--media) minmax(0, 1fr) auto; gap: var(--gap); align-items: center;
+  padding-block: clamp(18px, 3vw, 28px);
+}
+.sec > summary::-webkit-details-marker { display: none; }
+.sec-num { font-family: var(--f-mono); font-size: 0.8rem; letter-spacing: 0.06em; color: var(--pink); }
+.sec-title {
+  display: block; font-family: var(--f-display); font-weight: 700; font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+  letter-spacing: -0.02em; line-height: 1.1; transition: color 0.2s ease;
+}
+.sec-sub { display: block; font-family: var(--f-mono); font-size: 0.75rem; letter-spacing: 0.03em; color: var(--ink-soft); margin-top: 8px; }
+.sec-icon {
+  display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid var(--line); font-family: var(--f-mono); font-size: 1.2rem; line-height: 1;
+  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+}
+.sec > summary:hover .sec-title { color: var(--pink); }
+.sec > summary:hover .sec-icon { border-color: var(--pink); color: var(--pink); }
+.sec[open] .sec-icon { transform: rotate(45deg); background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.sec-body { padding-bottom: clamp(32px, 5vw, 56px); }
+.sec[open] .sec-body { animation: sec-open 0.35s ease; }
+@keyframes sec-open { from { opacity: 0; transform: translateY(-8px); } }
+
+.item { display: grid; grid-template-columns: var(--media) minmax(0, 1fr); gap: var(--gap); align-items: start; }
+.item + .item { margin-top: clamp(36px, 5vw, 52px); }
+.item > .text { grid-column: 2; max-width: 62ch; }
+.item > .media { grid-column: 1; grid-row: 1; display: block; }
+.item > img.media, .item > .media img { display: block; width: 100%; height: auto; aspect-ratio: 1; border-radius: 24px; }
+.item > a.media img { object-fit: cover; object-position: 50% 40%; border-radius: 16px; }
+.item h2 { font-family: var(--f-display); font-weight: 700; font-size: 1.6rem; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 8px; }
+.item p { margin: 0 0 14px; }
 .tags { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 0 0 16px; }
 .tags li { font-family: var(--f-mono); font-size: 0.72rem; color: var(--ink-soft); border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; }
 .links { display: flex; flex-wrap: wrap; gap: 8px 20px; font-family: var(--f-display); font-weight: 500; }
-@media (max-width: 480px) { .card { grid-template-columns: minmax(0, 1fr); } .card img { width: 72px; height: 72px; border-radius: 16px; } }
+
+/* Ankabuti header: same columns, but on a soft pink panel, so it reads as the label the apps belong to.
+   The panel's padding is pulled back out with a negative margin, so its contents stay on the grid. */
+.brand {
+  --pad: 16px;
+  background: color-mix(in srgb, var(--pink-soft) 55%, transparent);
+  border-radius: 20px; padding: 20px var(--pad); margin-inline: calc(-1 * var(--pad));
+  align-items: center;
+}
+.brand .label { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.06em; color: var(--pink); margin: 0 0 6px; }
+.brand p:last-child { margin-bottom: 0; }
+
+@media (max-width: 560px) {
+  :root { --media: 72px; }
+  .sec > summary { grid-template-columns: 2.2rem minmax(0, 1fr) auto; gap: 12px; }
+  .item { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .item > .text, .item > .media, .item > .shots { grid-column: 1; grid-row: auto; }
+  .item > .media, .item > img.media { width: var(--media); }
+  .item > a.media { width: 100%; }
+  .item > a.media img { aspect-ratio: 16 / 9; }
+}
 /* Screenshot strip: phone-shaped shots, slightly tilted like photos on a table; scrolls sideways on narrow screens. */
 .shots {
   grid-column: 2; display: flex; gap: clamp(12px, 2.4vw, 20px); margin: 6px 0 0;
@@ -161,13 +206,13 @@ h1 {
 }
 .shots .zoom:nth-child(even) { transform: translateY(14px) rotate(2deg); }
 .shots .zoom:hover, .shots .zoom:focus-visible { transform: translateY(-6px) rotate(0deg) scale(1.03); }
-.card .shots img {
+.item .shots img {
   width: 100%; height: auto; aspect-ratio: 1 / 2;
   object-fit: cover; object-position: top; border-radius: 18px;
   background: var(--pink-soft); border: 3px solid var(--bg); outline: 1px solid var(--line);
   box-shadow: 0 14px 28px -14px rgba(34, 27, 36, 0.5);
 }
-.event .zoom { display: block; border-radius: 14px; cursor: zoom-in; }
+.media.zoom { cursor: zoom-in; }
 @media (prefers-reduced-motion: reduce) { .shots .zoom { transition: none; } }
 
 /* Lightbox: a click on a screenshot or photo shows it big; click anywhere, Esc or the arrows to move on. */
@@ -191,15 +236,8 @@ h1 {
 .lightbox .lb-next { right: 16px; top: 50%; transform: translateY(-50%); }
 .lightbox button[hidden] { display: none; }
 @media (max-width: 600px) { .lightbox .lb-prev, .lightbox .lb-next { top: auto; bottom: 16px; transform: none; } }
-@media (max-width: 480px) { .shots { grid-column: 1; } }
-.brand { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: clamp(16px, 3vw, 28px); align-items: center; max-width: 720px; margin: 0 0 clamp(32px, 5vw, 48px); }
-.brand img { width: 120px; height: 120px; border-radius: 20px; display: block; }
-.brand p { margin: 0; }
-.event:last-child { margin-bottom: 0; }
-.card + .card { margin-top: clamp(32px, 5vw, 48px); }
-@media (max-width: 480px) { .brand { grid-template-columns: minmax(0, 1fr); } .brand img { width: 96px; height: 96px; border-radius: 16px; } }
 
-footer { padding-block: 24px 32px; border-top: 1px solid var(--line); font-family: var(--f-mono); font-size: 0.75rem; color: var(--ink-soft); }
+footer { padding-block: 24px 32px; font-family: var(--f-mono); font-size: 0.75rem; color: var(--ink-soft); }
 
 @media (max-width: 760px) {
   main { grid-template-columns: minmax(0, 1fr); align-items: start; }
@@ -239,109 +277,136 @@ footer { padding-block: 24px 32px; border-top: 1px solid var(--line); font-famil
     </figure>
   </main>
 
-  <section class="project" aria-labelledby="thesis-title">
-    <p class="role" data-i18n="thesisT">Bachelor's thesis</p>
-    <article class="event">
-      <h2 id="thesis-title">Credibility on Demand</h2>
-      <p data-i18n="thesisText">Checking the quality of AI-written answers by hand is slow and expensive, so more and more often another AI does the checking. But AI judges can be fooled, just like people. One example is <i>authority bias</i>: an answer seems better simply because it cites a source, whether or not the source is real. For my thesis I am building the first German dataset to measure this, and I test whether AI judges fall for it.</p>
-      <ul class="tags">
-        <li data-i18n="tagEval">AI evaluation</li>
-        <li>Python</li>
-        <li data-i18n="tagProgress">In progress</li>
-      </ul>
-    </article>
-  </section>
+  <div class="sections">
+    <details class="sec" name="sec" id="thesis">
+      <summary>
+        <span class="sec-num">01</span>
+        <span><span class="sec-title" data-i18n="thesisT">Bachelor's thesis</span><span class="sec-sub" data-i18n="secThesisSub">Credibility on Demand · authority bias in AI judges</span></span>
+        <span class="sec-icon" aria-hidden="true">+</span>
+      </summary>
+      <div class="sec-body">
+        <article class="item">
+          <div class="text">
+            <h2>Credibility on Demand</h2>
+            <p data-i18n="thesisText">Checking the quality of AI-written answers by hand is slow and expensive, so more and more often another AI does the checking. But AI judges can be fooled, just like people. One example is <i>authority bias</i>: an answer seems better simply because it cites a source, whether or not the source is real. For my thesis I am building the first German dataset to measure this, and I test whether AI judges fall for it.</p>
+            <ul class="tags">
+              <li>LLM-as-a-judge</li>
+              <li data-i18n="tagBias">AI bias</li>
+              <li>Python</li>
+              <li>LLM APIs</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </details>
 
-  <section class="project" aria-labelledby="event-title">
-    <p class="role" data-i18n="projT">Projects</p>
-    <article class="event">
-      <a class="zoom" href="https://sinalaura.github.io/gogirls/images/gogirls-night-1600.jpg"><img src="https://sinalaura.github.io/gogirls/images/gogirls-night-800.jpg" width="800" height="450" loading="lazy" data-i18n-alt="eventAlt" alt="Three women laughing over a Go board at a Go Girls* Game Night"></a>
-      <div>
-        <h2 id="event-title">Go Girls* Game Night</h2>
-        <p data-i18n="eventText1">In September 2026 I started the Go Girls* Game Night, a monthly Go evening for women* in Heidelberg that I host together with my partner. I wanted to give women an easy way into the game and bring more of them to Go.</p>
-        <p data-i18n="eventText2">I also built the event's website: it shows the upcoming dates and links them to Meetup.</p>
-        <ul class="tags">
-          <li data-i18n="tagEvent">Community</li>
-          <li data-i18n="tagSite">Website</li>
-          <li data-i18n="tagAi">Agentic AI</li>
-        </ul>
-        <div class="links">
-          <a href="https://sinalaura.github.io/gogirls/" data-i18n="linkEvent">Event website ↗</a>
+    <details class="sec" name="sec" id="projects">
+      <summary>
+        <span class="sec-num">02</span>
+        <span><span class="sec-title" data-i18n="projT">Projects</span><span class="sec-sub">Go Girls* Game Night</span></span>
+        <span class="sec-icon" aria-hidden="true">+</span>
+      </summary>
+      <div class="sec-body">
+        <article class="item">
+          <a class="media zoom" href="https://sinalaura.github.io/gogirls/images/gogirls-night-1600.jpg"><img src="https://sinalaura.github.io/gogirls/images/gogirls-night-800.jpg" width="800" height="450" loading="lazy" data-i18n-alt="eventAlt" alt="Three women laughing over a Go board at a Go Girls* Game Night"></a>
+          <div class="text">
+            <h2>Go Girls* Game Night</h2>
+            <p data-i18n="eventText1">In September 2026 I started the Go Girls* Game Night, a monthly Go evening for women* in Heidelberg that I host together with my partner. I wanted to give women an easy way into the game and bring more of them to Go.</p>
+            <p data-i18n="eventText2">I also built the event's website: it shows the upcoming dates and links them to Meetup.</p>
+            <ul class="tags">
+              <li data-i18n="tagEvent">Community building</li>
+              <li data-i18n="tagOrg">Event organisation</li>
+              <li data-i18n="tagSite">Web design</li>
+            </ul>
+            <div class="links">
+              <a href="https://sinalaura.github.io/gogirls/" data-i18n="linkEvent">Event website ↗</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </details>
+
+    <details class="sec" name="sec" id="apps">
+      <summary>
+        <span class="sec-num">03</span>
+        <span><span class="sec-title">Ankabuti Applications</span><span class="sec-sub">Go Girls* Timer · Queer Gambit · Timebits</span></span>
+        <span class="sec-icon" aria-hidden="true">+</span>
+      </summary>
+      <div class="sec-body">
+        <div class="item brand">
+          <img class="media" src="https://sinalaura.github.io/gogirls/images/ankabuti-logo.jpg" width="360" height="360" loading="lazy" data-i18n-alt="ankAlt" alt="Ankabuti Applications logo: a cute black spider hanging from a thread">
+          <div class="text">
+            <p class="label" data-i18n="ankLabel">My own app label</p>
+            <p data-i18n="ankText">Recently I started using agentic AI to see whether I could make apps myself, and found I could turn ideas into finished apps quickly. Soon I had lots of ideas for apps that are cute and useful at the same time, and I wanted to build them under my own brand. Its name comes from <i>ankabut</i>, the Arabic word for spider, so a little spider climbs into every app icon.</p>
+          </div>
         </div>
-      </div>
-    </article>
-  </section>
 
-  <section class="project" aria-labelledby="apps-title">
-    <p class="role" id="apps-title">Ankabuti Applications</p>
-    <div class="brand">
-      <img src="https://sinalaura.github.io/gogirls/images/ankabuti-logo.jpg" width="360" height="360" loading="lazy" data-i18n-alt="ankAlt" alt="Ankabuti Applications logo: a cute black spider hanging from a thread">
-      <p data-i18n="ankText">Recently I started using agentic AI to see whether I could make apps myself, and found I could turn ideas into finished apps quickly. Soon I had lots of ideas for apps that are cute and useful at the same time, and I wanted to build them under my own brand. Its name comes from <i>ankabut</i>, the Arabic word for spider, so a little spider climbs into every app icon.</p>
-    </div>
+        <article class="item">
+          <img class="media" src="https://sinalaura.github.io/go-timer/icon-192.png" width="192" height="192" alt="">
+          <div class="text">
+            <h2>Go Girls* Timer</h2>
+            <p data-i18n="gtText">For the Go Girls* Game Nights I wanted a Go clock in a style that fits the event: as cute and girly as the evenings themselves. I also needed one to practise for a tournament. So I built it with Claude Code, from idea to a first working version in one day. It lies on a phone next to the board, has Fischer and byo-yomi time, statistics with a chart of the time per move and several colour themes to switch between. It runs in the browser and will soon be available on Google Play.</p>
+            <ul class="tags">
+              <li>HTML · CSS · JavaScript</li>
+              <li data-i18n="tagPwa">Offline web app</li>
+              <li>Claude Code</li>
+              <li>Google Play</li>
+            </ul>
+            <div class="links">
+              <a href="https://sinalaura.github.io/go-timer/" data-i18n="linkApp">Try the app ↗</a>
+              <a href="https://github.com/SinaLaura/go-timer" data-i18n="linkCode">Code on GitHub ↗</a>
+            </div>
+          </div>
+          <div class="shots" role="group" data-i18n-aria="gtShots" aria-label="Screenshots of the Go Girls* Timer">
+            <a class="zoom" href="https://sinalaura.github.io/go-timer/images/go-girls.gif"><img src="https://sinalaura.github.io/go-timer/images/go-girls.gif" width="390" height="844" loading="lazy" data-i18n-alt="gtShot1" alt="The clock during a game, in the Go Girls* colours"></a>
+            <a class="zoom" href="https://sinalaura.github.io/go-timer/images/settings.png"><img src="https://sinalaura.github.io/go-timer/images/settings.png" width="780" height="1688" loading="lazy" data-i18n-alt="gtShot5" alt="Time settings: Fischer, byo-yomi or a simple timer"></a>
+            <a class="zoom" href="https://sinalaura.github.io/go-timer/images/stats.png"><img src="https://sinalaura.github.io/go-timer/images/stats.png" width="780" height="1688" loading="lazy" data-i18n-alt="gtShot2" alt="Paused game with statistics for both players"></a>
+          </div>
+        </article>
 
-    <div class="card">
-      <img src="https://sinalaura.github.io/go-timer/icon-192.png" width="192" height="192" alt="">
-      <div>
-        <h2>Go Girls* Timer</h2>
-        <p data-i18n="gtText">For the Go Girls* Game Nights I wanted a Go clock in a style that fits the event: as cute and girly as the evenings themselves. I also needed one to practise for a tournament. So I built it with Claude Code, from idea to a first working version in one day. It lies on a phone next to the board, has Fischer and byo-yomi time, statistics with a chart of the time per move and several colour themes to switch between. It runs in the browser and will soon be available on Google Play.</p>
-        <ul class="tags">
-          <li>HTML · CSS · JavaScript</li>
-          <li data-i18n="tagPwa">Offline web app</li>
-          <li data-i18n="tagAi">Agentic AI</li>
-          <li>Google Play</li>
-        </ul>
-        <div class="links">
-          <a href="https://sinalaura.github.io/go-timer/" data-i18n="linkApp">Try the app ↗</a>
-          <a href="https://github.com/SinaLaura/go-timer" data-i18n="linkCode">Code on GitHub ↗</a>
-        </div>
-      </div>
-      <div class="shots" role="group" data-i18n-aria="gtShots" aria-label="Screenshots of the Go Girls* Timer">
-        <a class="zoom" href="https://sinalaura.github.io/go-timer/images/go-girls.gif"><img src="https://sinalaura.github.io/go-timer/images/go-girls.gif" width="390" height="844" loading="lazy" data-i18n-alt="gtShot1" alt="The clock during a game, in the Go Girls* colours"></a>
-        <a class="zoom" href="https://sinalaura.github.io/go-timer/images/settings.png"><img src="https://sinalaura.github.io/go-timer/images/settings.png" width="780" height="1688" loading="lazy" data-i18n-alt="gtShot5" alt="Time settings: Fischer, byo-yomi or a simple timer"></a>
-        <a class="zoom" href="https://sinalaura.github.io/go-timer/images/stats.png"><img src="https://sinalaura.github.io/go-timer/images/stats.png" width="780" height="1688" loading="lazy" data-i18n-alt="gtShot2" alt="Paused game with statistics for both players"></a>
-      </div>
-    </div>
+        <article class="item">
+          <img class="media" src="https://sinalaura.github.io/chess-timer/icon-192.png" width="192" height="192" alt="">
+          <div class="text">
+            <h2>Queer Gambit</h2>
+            <p data-i18n="qgText">An adaptation of the Go Girls* Timer for chess: the same principle, made for the chessboard.</p>
+            <ul class="tags">
+              <li>HTML · CSS · JavaScript</li>
+              <li data-i18n="tagPwa">Offline web app</li>
+              <li>Claude Code</li>
+            </ul>
+            <div class="links">
+              <a href="https://sinalaura.github.io/chess-timer/" data-i18n="linkApp">Try the app ↗</a>
+              <a href="https://github.com/SinaLaura/chess-timer" data-i18n="linkCode">Code on GitHub ↗</a>
+            </div>
+          </div>
+        </article>
 
-    <div class="card">
-      <img src="https://sinalaura.github.io/chess-timer/icon-192.png" width="192" height="192" alt="">
-      <div>
-        <h2>Queer Gambit</h2>
-        <p data-i18n="qgText">An adaptation of the Go Girls* Timer for chess: the same principle, made for the chessboard.</p>
-        <ul class="tags">
-          <li>HTML · CSS · JavaScript</li>
-          <li data-i18n="tagPwa">Offline web app</li>
-          <li data-i18n="tagAi">Agentic AI</li>
-        </ul>
-        <div class="links">
-          <a href="https://sinalaura.github.io/chess-timer/" data-i18n="linkApp">Try the app ↗</a>
-          <a href="https://github.com/SinaLaura/chess-timer" data-i18n="linkCode">Code on GitHub ↗</a>
-        </div>
+        <article class="item">
+          <img class="media" src="https://sinalaura.github.io/countdown/icon-192.png" width="192" height="192" alt="">
+          <div class="text">
+            <h2>Timebits</h2>
+            <p data-i18n="tbText1">Most timers show a number; I wanted to see at a glance how much time is left. In Timebits every minute is a small item on the screen that leaves when its minute is over, so the picture gets visibly emptier as time passes. Tap into the empty space and it switches to another look.</p>
+            <ul class="tags">
+              <li>JavaScript</li>
+              <li data-i18n="tagCanvas">Canvas animation</li>
+              <li data-i18n="tagPwa">Offline web app</li>
+              <li>Claude Code</li>
+            </ul>
+            <div class="links">
+              <a href="https://sinalaura.github.io/countdown/" data-i18n="linkApp">Try the app ↗</a>
+              <a href="https://github.com/SinaLaura/countdown" data-i18n="linkCode">Code on GitHub ↗</a>
+            </div>
+          </div>
+          <div class="shots" role="group" data-i18n-aria="tbShots" aria-label="Screenshots of Timebits">
+            <a class="zoom" href="images/timebits-flower.png"><img src="images/timebits-flower.png" width="390" height="780" loading="lazy" data-i18n-alt="tbShot1" alt="A flower with seven petals left; fallen petals lie below"></a>
+            <a class="zoom" href="images/timebits-spider.png"><img src="images/timebits-spider.png" width="359" height="718" loading="lazy" data-i18n-alt="tbShot2" alt="A spider on its thread with nine legs left; fallen legs lie below"></a>
+            <a class="zoom" href="images/timebits-hourglass.png"><img src="images/timebits-hourglass.png" width="390" height="780" loading="lazy" data-i18n-alt="tbShot3" alt="An hourglass with 19 grains left at the top"></a>
+            <a class="zoom" href="images/timebits-caterpillar.png"><img src="images/timebits-caterpillar.png" width="390" height="780" loading="lazy" data-i18n-alt="tbShot4" alt="A caterpillar with ten segments left"></a>
+          </div>
+        </article>
       </div>
-    </div>
-
-    <div class="card">
-      <img src="https://sinalaura.github.io/countdown/icon-192.png" width="192" height="192" alt="">
-      <div>
-        <h2>Timebits</h2>
-        <p data-i18n="tbText1">Most timers show a number; I wanted to see at a glance how much time is left. In Timebits every minute is a small item on the screen that leaves when its minute is over, so the picture gets visibly emptier as time passes. Tap into the empty space and it switches to another look.</p>
-        <ul class="tags">
-          <li>HTML · Canvas · JavaScript</li>
-          <li data-i18n="tagPwa">Offline web app</li>
-          <li data-i18n="tagAi">Agentic AI</li>
-        </ul>
-        <div class="links">
-          <a href="https://sinalaura.github.io/countdown/" data-i18n="linkApp">Try the app ↗</a>
-          <a href="https://github.com/SinaLaura/countdown" data-i18n="linkCode">Code on GitHub ↗</a>
-        </div>
-      </div>
-      <div class="shots" role="group" data-i18n-aria="tbShots" aria-label="Screenshots of Timebits">
-        <a class="zoom" href="images/timebits-flower.png"><img src="images/timebits-flower.png" width="390" height="780" loading="lazy" data-i18n-alt="tbShot1" alt="A flower with seven petals left; fallen petals lie below"></a>
-        <a class="zoom" href="images/timebits-spider.png"><img src="images/timebits-spider.png" width="359" height="718" loading="lazy" data-i18n-alt="tbShot2" alt="A spider on its thread with nine legs left; fallen legs lie below"></a>
-        <a class="zoom" href="images/timebits-hourglass.png"><img src="images/timebits-hourglass.png" width="390" height="780" loading="lazy" data-i18n-alt="tbShot3" alt="An hourglass with 19 grains left at the top"></a>
-        <a class="zoom" href="images/timebits-caterpillar.png"><img src="images/timebits-caterpillar.png" width="390" height="780" loading="lazy" data-i18n-alt="tbShot4" alt="A caterpillar with ten segments left"></a>
-      </div>
-    </div>
-  </section>
+    </details>
+  </div>
 
   <dialog class="lightbox" id="lightbox" data-i18n-aria="lbAria" aria-label="Enlarged picture">
     <img id="lb-img" src="" alt="">
@@ -372,12 +437,14 @@ footer { padding-block: 24px 32px; border-top: 1px solid var(--line); font-famil
     projT: "Projekte",
     thesisT: "Bachelorarbeit",
     thesisText: "Die Qualität KI-generierter Antworten von Hand zu prüfen ist langsam und teuer, deshalb übernimmt das immer öfter eine andere KI. Doch KI-Bewerter lassen sich täuschen, genau wie Menschen. Ein Beispiel ist der <i>Authority Bias</i>: Eine Antwort wirkt besser, nur weil sie eine Quelle nennt, egal ob es die Quelle wirklich gibt. Für meine Bachelorarbeit baue ich den ersten deutschen Datensatz, um das zu messen, und untersuche, ob KI-Bewerter darauf hereinfallen.",
-    tagEval: "KI-Evaluation", tagProgress: "In Arbeit",
+    tagBias: "Bias in KI",
+    secThesisSub: "Credibility on Demand · Authority Bias bei KI-Bewertern",
+    ankLabel: "Mein eigenes App-Label",
     eventAlt: "Drei Frauen lachen über einem Go-Brett bei einer Go Girls* Game Night",
     eventText1: "Im September 2026 habe ich die Go Girls* Game Night ins Leben gerufen, einen monatlichen Go-Abend für Frauen* in Heidelberg, den ich zu zweit veranstalte. Ich wollte Frauen einen leichten Einstieg ins Spiel bieten und mehr von ihnen fürs Go begeistern.",
     eventText2: "Außerdem habe ich die Website zum Event gebaut: Sie zeigt die nächsten Termine und verlinkt sie mit Meetup.",
-    tagEvent: "Community", tagSite: "Website", linkEvent: "Zur Event-Website ↗",
-    tagAi: "Agentische KI",
+    tagEvent: "Community-Aufbau", tagOrg: "Eventorganisation", tagSite: "Webdesign", linkEvent: "Zur Event-Website ↗",
+    tagCanvas: "Canvas-Animation",
     gtText: "Für die Go Girls* Game Nights wollte ich eine Go-Uhr, deren Stil zum Event passt: so niedlich und mädchenhaft wie die Abende selbst. Außerdem brauchte ich eine, um für ein Turnier zu üben. Also habe ich sie mit Claude Code gebaut, an einem Tag von der Idee bis zur ersten funktionierenden Version. Auf dem Handy neben dem Brett kann sie Fischer- und Byo-yomi-Bedenkzeit, zeigt eine Statistik mit einem Diagramm der Zeit pro Zug und hat mehrere Farbthemen zum Wechseln. Sie läuft im Browser und ist bald bei Google Play erhältlich.",
     gtShots: "Screenshots vom Go Girls* Timer",
     gtShot1: "Die Uhr während einer Partie, in den Go-Girls*-Farben",
