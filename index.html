@@ -115,6 +115,21 @@ h1 {
 }
 .photo img { position: relative; display: block; width: 100%; height: auto; border-radius: 10px; }
 
+.project { border-top: 1px solid var(--line); padding-block: clamp(28px, 5vw, 48px); }
+.project .role { margin-bottom: 18px; }
+.event { max-width: 720px; margin: 0 0 clamp(36px, 6vw, 56px); }
+.event img { display: block; width: 100%; height: auto; border-radius: 10px; margin: 0 0 20px; }
+.event h2 { font-family: var(--f-display); font-weight: 700; font-size: 1.6rem; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 8px; }
+.event p { margin: 0 0 14px; }
+.card { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: clamp(16px, 3vw, 28px); align-items: start; max-width: 720px; }
+.card img { width: 88px; height: 88px; border-radius: 20px; display: block; }
+.card h2 { font-family: var(--f-display); font-weight: 700; font-size: 1.6rem; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 8px; }
+.card p { margin: 0 0 14px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 0 0 16px; }
+.tags li { font-family: var(--f-mono); font-size: 0.72rem; color: var(--ink-soft); border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; }
+.links { display: flex; flex-wrap: wrap; gap: 8px 20px; font-family: var(--f-display); font-weight: 500; }
+@media (max-width: 480px) { .card { grid-template-columns: minmax(0, 1fr); } .card img { width: 72px; height: 72px; border-radius: 16px; } }
+
 footer { padding-block: 24px 32px; border-top: 1px solid var(--line); font-family: var(--f-mono); font-size: 0.75rem; color: var(--ink-soft); }
 
 @media (max-width: 760px) {
@@ -153,6 +168,42 @@ footer { padding-block: 24px 32px; border-top: 1px solid var(--line); font-famil
     </figure>
   </main>
 
+  <section class="project" aria-labelledby="event-title">
+    <p class="role" data-i18n="projT">Projects</p>
+    <article class="event">
+      <img src="https://sinalaura.github.io/gogirls/images/gogirls-night-800.jpg" width="800" height="450" data-i18n-alt="eventAlt" alt="Three women laughing over a Go board at a Go Girls* Game Night">
+      <h2 id="event-title">Go Girls* Game Night</h2>
+      <p data-i18n="eventText1">In September 2026 I started the Go Girls* Game Night, a monthly Go evening for women* in Heidelberg that I host together with Maya. The idea: an easy way into the game, and more women* who love Go.</p>
+      <p data-i18n="eventText2">I built the event's website with Claude Code and look after it: in German and English, made for phones, with dates that work themselves out, links to Meetup and Google Calendar, and a short introduction to Go.</p>
+      <ul class="tags">
+        <li data-i18n="tagEvent">Community</li>
+        <li data-i18n="tagSite">Website</li>
+        <li>Claude Code</li>
+      </ul>
+      <div class="links">
+        <a href="https://sinalaura.github.io/gogirls/" data-i18n="linkEvent">Event website ↗</a>
+      </div>
+    </article>
+
+    <div class="card">
+      <img src="https://sinalaura.github.io/go-timer/icon-192.png" width="192" height="192" alt="">
+      <div>
+        <h2>Go Girls* Timer</h2>
+        <p data-i18n="projText">The Go Girls* led to my next project: a Go clock in the same cute, girly style. I wanted one to practise for a tournament, so I built it with Claude Code as my pair programmer, from idea to a first working version in one day. It sits on a phone next to the board, has Fischer and byo-yomi time, statistics with a chart of the time per move and a voice in English and German, and works offline. It runs in any browser and is now in testing as an Android app on Google Play.</p>
+        <ul class="tags">
+          <li>HTML · CSS · JavaScript</li>
+          <li data-i18n="tagPwa">Offline web app</li>
+          <li>Claude Code</li>
+          <li>Google Play</li>
+        </ul>
+        <div class="links">
+          <a href="https://sinalaura.github.io/go-timer/" data-i18n="linkApp">Try the app ↗</a>
+          <a href="https://github.com/SinaLaura/go-timer" data-i18n="linkCode">Code on GitHub ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer>© 2026 Sina Denzel</footer>
 </div>
 
@@ -172,6 +223,14 @@ footer { padding-block: 24px 32px; border-top: 1px solid var(--line); font-famil
     nowThesis: "Authority Bias in LLM-Judges (in Arbeit)",
     nowTm: "Vice President Membership, Heidelberg",
     status: "Offen für Werkstudentenstellen ab November 2026",
+    projT: "Projekte",
+    eventAlt: "Drei Frauen lachen über einem Go-Brett bei einer Go Girls* Game Night",
+    eventText1: "Im September 2026 habe ich die Go Girls* Game Night ins Leben gerufen, einen monatlichen Go-Abend für Frauen* in Heidelberg, den ich gemeinsam mit Maya veranstalte. Die Idee: einen niedrigschwelligen Einstieg ins Spiel bieten und mehr Frauen* fürs Go begeistern.",
+    eventText2: "Die Website zum Event habe ich mit Claude Code gebaut und betreue sie: zweisprachig (Deutsch/Englisch), fürs Handy optimiert, mit automatisch berechneten Terminen, Links zu Meetup und Google Kalender und einer kurzen Einführung in Go.",
+    tagEvent: "Community", tagSite: "Website", linkEvent: "Zur Event-Website ↗",
+    projText: "Aus den Go Girls* ist mein nächstes Projekt entstanden: eine Go-Uhr im gleichen niedlichen, mädchenhaften Stil. Ich wollte damit für ein Turnier üben und habe sie mit Claude Code als Programmierpartner gebaut, an einem Tag von der Idee bis zur ersten funktionierenden Version. Auf dem Handy neben dem Brett kann sie Fischer- und Byo-yomi-Bedenkzeit, zeigt eine Statistik mit einem Diagramm der Zeit pro Zug, spricht Englisch und Deutsch und funktioniert offline. Sie läuft in jedem Browser und ist jetzt als Android-App bei Google Play im Test.",
+    tagPwa: "Offline-Web-App",
+    linkApp: "App ausprobieren ↗", linkCode: "Code auf GitHub ↗",
     copy: "Adresse kopieren", copied: "Kopiert",
     photoAlt: "Porträt von Sina Denzel"
   };
