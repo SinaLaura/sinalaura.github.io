@@ -155,16 +155,42 @@ h1 {
   padding: 10px 6px 26px; margin-inline: -6px;
 }
 .shots::-webkit-scrollbar { display: none; }
+.shots .zoom {
+  flex: 1 1 0; min-width: 100px; max-width: 138px; scroll-snap-align: start; border-radius: 18px;
+  transform: rotate(-2deg); transition: transform 0.25s ease; cursor: zoom-in;
+}
+.shots .zoom:nth-child(even) { transform: translateY(14px) rotate(2deg); }
+.shots .zoom:hover, .shots .zoom:focus-visible { transform: translateY(-6px) rotate(0deg) scale(1.03); }
 .card .shots img {
-  flex: 1 1 0; min-width: 100px; max-width: 138px; height: auto; aspect-ratio: 1 / 2;
-  object-fit: cover; object-position: top; border-radius: 18px; scroll-snap-align: start;
+  width: 100%; height: auto; aspect-ratio: 1 / 2;
+  object-fit: cover; object-position: top; border-radius: 18px;
   background: var(--pink-soft); border: 3px solid var(--bg); outline: 1px solid var(--line);
   box-shadow: 0 14px 28px -14px rgba(34, 27, 36, 0.5);
-  transform: rotate(-2deg); transition: transform 0.25s ease;
 }
-.card .shots img:nth-child(even) { transform: translateY(14px) rotate(2deg); }
-.card .shots img:hover { transform: translateY(-6px) rotate(0deg) scale(1.03); }
-@media (prefers-reduced-motion: reduce) { .card .shots img { transition: none; } }
+.event .zoom { display: block; border-radius: 14px; cursor: zoom-in; }
+@media (prefers-reduced-motion: reduce) { .shots .zoom { transition: none; } }
+
+/* Lightbox: a click on a screenshot or photo shows it big; click anywhere, Esc or the arrows to move on. */
+.lightbox {
+  border: 0; padding: 0; background: transparent; max-width: 100vw; max-height: 100vh;
+  width: 100vw; height: 100vh; overflow: hidden;
+}
+.lightbox::backdrop { background: rgba(23, 19, 26, 0.94); }
+.lightbox[open] { display: grid; place-items: center; }
+.lightbox img {
+  max-width: calc(100vw - 32px); max-height: calc(100vh - 96px); width: auto; height: auto;
+  border-radius: 18px; box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.7); cursor: zoom-out;
+}
+.lightbox button {
+  position: absolute; font-family: var(--f-mono); font-size: 1rem; color: #f2ecf1;
+  background: rgba(255, 255, 255, 0.12); border: 0; border-radius: 999px; width: 44px; height: 44px; cursor: pointer;
+}
+.lightbox button:hover { background: rgba(255, 255, 255, 0.24); }
+.lightbox .lb-close { top: 16px; right: 16px; }
+.lightbox .lb-prev { left: 16px; top: 50%; transform: translateY(-50%); }
+.lightbox .lb-next { right: 16px; top: 50%; transform: translateY(-50%); }
+.lightbox button[hidden] { display: none; }
+@media (max-width: 600px) { .lightbox .lb-prev, .lightbox .lb-next { top: auto; bottom: 16px; transform: none; } }
 @media (max-width: 480px) { .shots { grid-column: 1; } }
 .brand { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: clamp(16px, 3vw, 28px); align-items: center; max-width: 720px; margin: 0 0 clamp(32px, 5vw, 48px); }
 .brand img { width: 120px; height: 120px; border-radius: 20px; display: block; }
@@ -229,11 +255,11 @@ footer { padding-block: 24px 32px; border-top: 1px solid var(--line); font-famil
   <section class="project" aria-labelledby="event-title">
     <p class="role" data-i18n="projT">Projects</p>
     <article class="event">
-      <img src="https://sinalaura.github.io/gogirls/images/gogirls-night-800.jpg" width="800" height="450" loading="lazy" data-i18n-alt="eventAlt" alt="Three women laughing over a Go board at a Go Girls* Game Night">
+      <a class="zoom" href="https://sinalaura.github.io/gogirls/images/gogirls-night-1600.jpg"><img src="https://sinalaura.github.io/gogirls/images/gogirls-night-800.jpg" width="800" height="450" loading="lazy" data-i18n-alt="eventAlt" alt="Three women laughing over a Go board at a Go Girls* Game Night"></a>
       <div>
         <h2 id="event-title">Go Girls* Game Night</h2>
         <p data-i18n="eventText1">In September 2026 I started the Go Girls* Game Night, a monthly Go evening for women* in Heidelberg that I host together with my partner. I wanted to give women an easy way into the game and bring more of them to Go.</p>
-        <p data-i18n="eventText2">I also built the event's website: it shows the upcoming dates and links them to Meetup automatically.</p>
+        <p data-i18n="eventText2">I also built the event's website: it shows the upcoming dates and links them to Meetup.</p>
         <ul class="tags">
           <li data-i18n="tagEvent">Community</li>
           <li data-i18n="tagSite">Website</li>
@@ -270,9 +296,9 @@ footer { padding-block: 24px 32px; border-top: 1px solid var(--line); font-famil
         </div>
       </div>
       <div class="shots" role="group" data-i18n-aria="gtShots" aria-label="Screenshots of the Go Girls* Timer">
-        <img src="https://sinalaura.github.io/go-timer/images/go-girls.gif" width="390" height="844" loading="lazy" data-i18n-alt="gtShot1" alt="The clock during a game, in the Go Girls* colours">
-        <img src="https://sinalaura.github.io/go-timer/images/settings.png" width="780" height="1688" loading="lazy" data-i18n-alt="gtShot5" alt="Time settings: Fischer, byo-yomi or a simple timer">
-        <img src="https://sinalaura.github.io/go-timer/images/stats.png" width="780" height="1688" loading="lazy" data-i18n-alt="gtShot2" alt="Paused game with statistics for both players">
+        <a class="zoom" href="https://sinalaura.github.io/go-timer/images/go-girls.gif"><img src="https://sinalaura.github.io/go-timer/images/go-girls.gif" width="390" height="844" loading="lazy" data-i18n-alt="gtShot1" alt="The clock during a game, in the Go Girls* colours"></a>
+        <a class="zoom" href="https://sinalaura.github.io/go-timer/images/settings.png"><img src="https://sinalaura.github.io/go-timer/images/settings.png" width="780" height="1688" loading="lazy" data-i18n-alt="gtShot5" alt="Time settings: Fischer, byo-yomi or a simple timer"></a>
+        <a class="zoom" href="https://sinalaura.github.io/go-timer/images/stats.png"><img src="https://sinalaura.github.io/go-timer/images/stats.png" width="780" height="1688" loading="lazy" data-i18n-alt="gtShot2" alt="Paused game with statistics for both players"></a>
       </div>
     </div>
 
@@ -298,7 +324,6 @@ footer { padding-block: 24px 32px; border-top: 1px solid var(--line); font-famil
       <div>
         <h2>Timebits</h2>
         <p data-i18n="tbText1">Most timers show a number; I wanted to see at a glance how much time is left. In Timebits every minute is a small item on the screen that leaves when its minute is over, so the picture gets visibly emptier as time passes. Tap into the empty space and it switches to another look.</p>
-        <p data-i18n="tbText2">For Timebits I tried a new way of working: with <code>/later</code> I add tasks to a to-do list, like a new feature, a fix or a design change, while <code>/next</code> has the AI work through that list. So I keep planning while the AI keeps building. The first version went online on 14 October 2026.</p>
         <ul class="tags">
           <li>HTML · Canvas · JavaScript</li>
           <li data-i18n="tagPwa">Offline web app</li>
@@ -310,13 +335,20 @@ footer { padding-block: 24px 32px; border-top: 1px solid var(--line); font-famil
         </div>
       </div>
       <div class="shots" role="group" data-i18n-aria="tbShots" aria-label="Screenshots of Timebits">
-        <img src="images/timebits-flower.png" width="390" height="780" loading="lazy" data-i18n-alt="tbShot1" alt="A flower with seven petals left; fallen petals lie below">
-        <img src="images/timebits-spider.png" width="359" height="718" loading="lazy" data-i18n-alt="tbShot2" alt="A spider on its thread with nine legs left; fallen legs lie below">
-        <img src="images/timebits-hourglass.png" width="390" height="780" loading="lazy" data-i18n-alt="tbShot3" alt="An hourglass with 19 grains left at the top">
-        <img src="images/timebits-caterpillar.png" width="390" height="780" loading="lazy" data-i18n-alt="tbShot4" alt="A caterpillar with ten segments left">
+        <a class="zoom" href="images/timebits-flower.png"><img src="images/timebits-flower.png" width="390" height="780" loading="lazy" data-i18n-alt="tbShot1" alt="A flower with seven petals left; fallen petals lie below"></a>
+        <a class="zoom" href="images/timebits-spider.png"><img src="images/timebits-spider.png" width="359" height="718" loading="lazy" data-i18n-alt="tbShot2" alt="A spider on its thread with nine legs left; fallen legs lie below"></a>
+        <a class="zoom" href="images/timebits-hourglass.png"><img src="images/timebits-hourglass.png" width="390" height="780" loading="lazy" data-i18n-alt="tbShot3" alt="An hourglass with 19 grains left at the top"></a>
+        <a class="zoom" href="images/timebits-caterpillar.png"><img src="images/timebits-caterpillar.png" width="390" height="780" loading="lazy" data-i18n-alt="tbShot4" alt="A caterpillar with ten segments left"></a>
       </div>
     </div>
   </section>
+
+  <dialog class="lightbox" id="lightbox" data-i18n-aria="lbAria" aria-label="Enlarged picture">
+    <img id="lb-img" src="" alt="">
+    <button type="button" class="lb-prev" id="lb-prev" data-i18n-aria="lbPrev" aria-label="Previous picture">←</button>
+    <button type="button" class="lb-next" id="lb-next" data-i18n-aria="lbNext" aria-label="Next picture">→</button>
+    <button type="button" class="lb-close" id="lb-close" data-i18n-aria="lbClose" aria-label="Close">✕</button>
+  </dialog>
 
   <footer>© 2026 Sina Denzel</footer>
 </div>
@@ -343,7 +375,7 @@ footer { padding-block: 24px 32px; border-top: 1px solid var(--line); font-famil
     tagEval: "KI-Evaluation", tagProgress: "In Arbeit",
     eventAlt: "Drei Frauen lachen über einem Go-Brett bei einer Go Girls* Game Night",
     eventText1: "Im September 2026 habe ich die Go Girls* Game Night ins Leben gerufen, einen monatlichen Go-Abend für Frauen* in Heidelberg, den ich zu zweit veranstalte. Ich wollte Frauen einen leichten Einstieg ins Spiel bieten und mehr von ihnen fürs Go begeistern.",
-    eventText2: "Außerdem habe ich die Website zum Event gebaut: Sie zeigt die nächsten Termine und verlinkt sie automatisch mit Meetup.",
+    eventText2: "Außerdem habe ich die Website zum Event gebaut: Sie zeigt die nächsten Termine und verlinkt sie mit Meetup.",
     tagEvent: "Community", tagSite: "Website", linkEvent: "Zur Event-Website ↗",
     tagAi: "Agentische KI",
     gtText: "Für die Go Girls* Game Nights wollte ich eine Go-Uhr, deren Stil zum Event passt: so niedlich und mädchenhaft wie die Abende selbst. Außerdem brauchte ich eine, um für ein Turnier zu üben. Also habe ich sie mit Claude Code gebaut, an einem Tag von der Idee bis zur ersten funktionierenden Version. Auf dem Handy neben dem Brett kann sie Fischer- und Byo-yomi-Bedenkzeit, zeigt eine Statistik mit einem Diagramm der Zeit pro Zug und hat mehrere Farbthemen zum Wechseln. Sie läuft im Browser und ist bald bei Google Play erhältlich.",
@@ -356,13 +388,13 @@ footer { padding-block: 24px 32px; border-top: 1px solid var(--line); font-famil
     ankAlt: "Logo von Ankabuti Applications: eine niedliche schwarze Spinne, die an einem Faden hängt",
     ankText: "Vor Kurzem habe ich angefangen, mit agentischer KI auszuprobieren, ob ich selbst Apps bauen kann, und dabei gemerkt, dass ich Ideen schnell in fertige Apps verwandeln kann. Bald hatte ich viele Ideen für Apps, die niedlich und nützlich zugleich sind, und wollte sie unter meiner eigenen Marke bauen. Der Name kommt von <i>ankabut</i>, dem arabischen Wort für Spinne, deshalb klettert in jedes App-Icon eine kleine Spinne.",
     tbText1: "Die meisten Timer zeigen eine Zahl; ich wollte auf einen Blick sehen, wie viel Zeit noch bleibt. In Timebits ist jede Minute ein kleines Element auf dem Bildschirm, das verschwindet, wenn seine Minute vorbei ist, so wird das Bild sichtbar leerer, während die Zeit vergeht. Tippt man ins Leere, wechselt es zu einem anderen Look.",
-    tbText2: "Bei Timebits habe ich eine neue Arbeitsweise ausprobiert: Mit <code>/later</code> schreibe ich Aufgaben auf eine To-do-Liste, etwa ein neues Feature, einen Fix oder eine Designänderung, während die KI sie über <code>/next</code> abarbeitet. So plane ich ständig weiter, während die KI weiterbaut. Die erste Version ging am 14. Oktober 2026 online.",
     qgText: "Eine Adaption des Go Girls* Timers fürs Schach: dasselbe Prinzip, gemacht fürs Schachbrett.",
     tbShots: "Screenshots von Timebits",
     tbShot1: "Eine Blume mit noch sieben Blütenblättern; abgefallene liegen darunter",
     tbShot2: "Eine Spinne an ihrem Faden mit noch neun Beinen; abgefallene liegen darunter",
     tbShot3: "Eine Sanduhr mit noch 19 Körnern oben",
     tbShot4: "Eine Raupe mit noch zehn Gliedern",
+    lbAria: "Vergrößertes Bild", lbPrev: "Vorheriges Bild", lbNext: "Nächstes Bild", lbClose: "Schließen",
     copy: "Adresse kopieren", copied: "Kopiert",
     photoAlt: "Porträt von Sina Denzel"
   };
@@ -403,6 +435,38 @@ footer { padding-block: 24px 32px; border-top: 1px solid var(--line); font-famil
   if (hash === "de" || hash === "en") start = hash;
   else if (stored === "de" || stored === "en") start = stored;
   setLang(start, false);
+
+  // Lightbox: links with class "zoom" open their picture big; arrows move within the same strip.
+  var lb = document.getElementById("lightbox");
+  var lbImg = document.getElementById("lb-img");
+  var lbPrev = document.getElementById("lb-prev");
+  var lbNext = document.getElementById("lb-next");
+  var group = [], pos = 0;
+  function show(i) {
+    pos = (i + group.length) % group.length;
+    var a = group[pos], thumb = a.querySelector("img");
+    lbImg.src = a.href;
+    lbImg.alt = thumb ? thumb.alt : "";
+    lbPrev.hidden = lbNext.hidden = group.length < 2;
+  }
+  document.querySelectorAll("a.zoom").forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      if (!lb.showModal) return;   // very old browsers just follow the link
+      e.preventDefault();
+      var strip = a.closest(".shots");
+      group = strip ? Array.prototype.slice.call(strip.querySelectorAll("a.zoom")) : [a];
+      show(group.indexOf(a));
+      lb.showModal();
+    });
+  });
+  lbPrev.addEventListener("click", function (e) { e.stopPropagation(); show(pos - 1); });
+  lbNext.addEventListener("click", function (e) { e.stopPropagation(); show(pos + 1); });
+  lb.addEventListener("click", function () { lb.close(); });
+  lb.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowLeft") show(pos - 1);
+    if (e.key === "ArrowRight") show(pos + 1);
+  });
+  lb.addEventListener("close", function () { lbImg.removeAttribute("src"); });
 })();
 </script>
 </body>
